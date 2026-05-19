@@ -14,6 +14,12 @@ const featuredLaws = laws.slice(0, 3);
 
 const AVATAR_COLORS = ["#D95C3A", "#B87AD4", "#7B3FA0", "#6B6460", "#C9A8DC"];
 
+const LAW_CATEGORY_COLOR: Record<string, string> = {
+  Cognitive:  "#D95C3A",
+  Behavioral: "#1E0E3A",
+  Emotional:  "#B87AD4",
+};
+
 export default function HomePage() {
   const [heroUrl, setHeroUrl] = useState("");
   const router = useRouter();
@@ -223,23 +229,37 @@ export default function HomePage() {
 
           {/* Left: law cards — order-2 on mobile so text header appears first */}
           <div className="space-y-4 order-2 md:order-1">
-            {featuredLaws.map((law) => (
-              <div key={law.name} className="rounded-2xl p-6 shadow-sm" style={{ position: "relative", overflow: "hidden", background: "#FDFAF8" }}>
-                <CardWaves />
-                <p className="text-[10px] tracking-[0.22em] uppercase font-medium mb-4" style={{ color: "#9E9589" }}>
-                  {law.category}
-                </p>
-                <h3 className="font-display text-xl font-normal text-gray-900 mb-2 leading-snug">
-                  {law.name}
-                </h3>
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B6460" }}>
-                  {law.def}
-                </p>
-                <p className="text-xs leading-relaxed font-medium" style={{ color: "#7B3FA0" }}>
-                  {law.use}
-                </p>
-              </div>
-            ))}
+            {featuredLaws.map((law) => {
+              const accent = LAW_CATEGORY_COLOR[law.category] ?? "#B87AD4";
+              return (
+                <div
+                  key={law.name}
+                  className="rounded-2xl p-6"
+                  style={{
+                    background: "rgba(255,255,255,0.62)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.75)",
+                    borderTop: `3px solid ${accent}`,
+                  }}
+                >
+                  <p
+                    className="text-[10px] tracking-[0.22em] uppercase font-semibold mb-4"
+                    style={{ color: accent }}
+                  >
+                    {law.category}
+                  </p>
+                  <h3 className="font-display text-xl font-normal text-gray-900 mb-2 leading-snug">
+                    {law.name}
+                  </h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B6460" }}>
+                    {law.def}
+                  </p>
+                  <p className="text-xs leading-relaxed font-medium" style={{ color: accent }}>
+                    {law.use}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           {/* Right: text — order-1 on mobile so it appears above the cards */}

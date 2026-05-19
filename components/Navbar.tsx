@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -23,11 +23,21 @@ const allNav = [...primaryNav, ...secondaryNav, { href: "/audit", label: "Audit"
 export function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
   const auditActive = pathname === "/audit"
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 pointer-events-none">
-      <div className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-white/10 backdrop-blur-sm">
+      <div
+        className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300"
+        style={scrolled ? { border: "1px solid rgba(0,0,0,0.12)" } : undefined}
+      >
         <Link href="/" className="px-2 py-1 mr-1 shrink-0" onClick={() => setOpen(false)}>
           <LogoMark />
         </Link>
