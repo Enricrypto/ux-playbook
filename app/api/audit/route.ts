@@ -2,6 +2,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 import { patterns, laws } from "@/lib/data";
 
+export const dynamic = "force-dynamic";
+
 const client = new Anthropic();
 
 function buildSystemPrompt(): string {
@@ -71,12 +73,15 @@ async function fetchGitHubContent(url: string): Promise<string> {
     const [readmeRes, repoRes, contentsRes] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${cleanRepo}/readme`, {
         headers: { Accept: "application/vnd.github.v3+json" },
+        cache: "no-store",
       }),
       fetch(`https://api.github.com/repos/${owner}/${cleanRepo}`, {
         headers: { Accept: "application/vnd.github.v3+json" },
+        cache: "no-store",
       }),
       fetch(`https://api.github.com/repos/${owner}/${cleanRepo}/contents`, {
         headers: { Accept: "application/vnd.github.v3+json" },
+        cache: "no-store",
       }),
     ]);
 
@@ -113,9 +118,9 @@ async function fetchWebsiteContent(url: string): Promise<string> {
   try {
     const res = await fetch(url, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; UX-Playbook-Audit/1.0)",
+        "User-Agent": "Mozilla/5.0 (compatible; UX-Playbook-Audit/1.0)",
       },
+      cache: "no-store",
       signal: AbortSignal.timeout(8000),
     });
 
