@@ -21,6 +21,27 @@ body {
     #d8cbb8;
 }
 
+@keyframes waveScroll {
+  to { transform: translateX(-50%); }
+}
+
+.wave-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  will-change: transform;
+}
+
+.wave-1 { animation: waveScroll 24s linear infinite; }
+.wave-2 { animation: waveScroll 16s linear infinite; }
+.wave-3 { animation: waveScroll 10s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-layer { animation: none; }
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;

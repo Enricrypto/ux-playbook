@@ -10,7 +10,7 @@ const categoryConfig: Record<string, { color: string; bgColor: string; borderCol
 
 export default function LawsPage() {
   return (
-    <div className="max-w-4xl mx-auto px-8 pt-24 pb-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-24 pb-16">
       <div className="mb-10">
         <h1 className="font-display text-3xl md:text-4xl font-normal text-gray-900">
           Psychology laws

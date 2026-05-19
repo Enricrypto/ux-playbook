@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { patterns, laws } from "@/lib/data";
 import { LogoMark } from "@/components/LogoMark";
+import { HeroWaves } from "@/components/HeroWaves";
 
 const featuredPatterns = patterns.slice(0, 3);
 const featuredLaws = laws.slice(0, 3);
@@ -10,9 +11,11 @@ export default function HomePage() {
     <div className="overflow-auto">
 
       {/* ── HERO ───────────────────────────────────────────────── */}
-      <div className="hero-gradient" style={{ height: "46vh" }} />
-      <section className="px-12 py-16" style={{ backgroundColor: "#F5F0EB" }}>
-        <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-16 items-center">
+      <div className="hero-gradient relative overflow-hidden" style={{ height: "46vh" }}>
+        <HeroWaves />
+      </div>
+      <section className="px-4 sm:px-8 md:px-12 py-16" style={{ backgroundColor: "#F5F0EB" }}>
+        <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-center">
           <h1
             className="font-display font-normal text-gray-900 leading-[1.02]"
             style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
@@ -43,7 +46,7 @@ export default function HomePage() {
       </section>
 
       {/* ── THE FRAMEWORK ──────────────────────────────────────── */}
-      <section className="px-12 py-24" style={{ backgroundColor: "#B87AD4" }}>
+      <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#B87AD4" }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="font-display text-4xl md:text-5xl font-normal text-gray-900 mb-4 leading-[1.1]">
             Three tools.<br />
@@ -54,7 +57,7 @@ export default function HomePage() {
             the research to back up every decision.
           </p>
 
-          <div className="space-y-16">
+          <div className="space-y-10 sm:space-y-16">
             {[
               {
                 num: "01",
@@ -78,9 +81,9 @@ export default function HomePage() {
               <Link
                 key={item.num}
                 href={item.href}
-                className="group grid grid-cols-[96px_1fr] gap-16 items-start"
+                className="group grid grid-cols-[56px_1fr] sm:grid-cols-[96px_1fr] gap-6 sm:gap-16 items-start"
               >
-                <span className="font-display text-8xl font-normal text-gray-900 leading-none">
+                <span className="font-display text-5xl sm:text-8xl font-normal text-gray-900 leading-none">
                   {item.num}
                 </span>
                 <div>
@@ -98,8 +101,8 @@ export default function HomePage() {
       </section>
 
       {/* ── PATTERNS IN PRACTICE ───────────────────────────────── */}
-      <section className="px-12 py-24" style={{ backgroundColor: "#EDEAE3" }}>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-16 items-start">
+      <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#EDEAE3" }}>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-start">
 
           {/* Left: text */}
           <div className="md:sticky md:top-32">
@@ -161,8 +164,8 @@ export default function HomePage() {
       </section>
 
       {/* ── PSYCHOLOGY LAWS ────────────────────────────────────── */}
-      <section className="px-12 py-24" style={{ backgroundColor: "#EDE5F5" }}>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-16 items-start">
+      <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#EDE5F5" }}>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-start">
 
           {/* Left: text */}
           <div className="md:sticky md:top-32">
@@ -211,8 +214,8 @@ export default function HomePage() {
       </section>
 
       {/* ── AUDIT CTA ──────────────────────────────────────────── */}
-      <section className="px-12 py-24" style={{ backgroundColor: "#C9A8DC" }}>
-        <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-16 items-center">
+      <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#C9A8DC" }}>
+        <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-center">
           <h2
             className="font-display font-normal text-gray-900 leading-[1.05]"
             style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
@@ -242,7 +245,7 @@ export default function HomePage() {
 
       {/* ── FOOTER ─────────────────────────────────────────────── */}
       <footer
-        className="px-12 py-10 border-t"
+        className="px-4 sm:px-8 md:px-12 py-10 border-t"
         style={{ backgroundColor: "#EDEAE3", borderColor: "#DDD8D0" }}
       >
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">

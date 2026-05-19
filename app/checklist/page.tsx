@@ -51,7 +51,7 @@ export default function ChecklistPage() {
   if (!loaded) return null;
 
   return (
-    <div className="max-w-3xl mx-auto px-8 pt-24 pb-16">
+    <div className="max-w-3xl mx-auto px-4 sm:px-8 pt-24 pb-16">
       <div className="flex items-start justify-between mb-8">
         <div>
           <h1 className="font-display text-3xl md:text-4xl font-normal text-gray-900">

@@ -30,7 +30,7 @@ export default function PatternsPage() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-8 pt-24 pb-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-24 pb-16">
       <div className="mb-6">
         <h1 className="font-display text-3xl md:text-4xl font-normal text-gray-900">Design patterns</h1>
         <p className="text-sm mt-1" style={{ color: "#9E9589" }}>

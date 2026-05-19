@@ -28,7 +28,7 @@ export default function FlowsPage() {
   const color = palette[active] ?? palette[0];
 
   return (
-    <div className="max-w-4xl mx-auto px-8 pt-24 pb-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-24 pb-16">
       <div className="mb-8">
         <h1 className="font-display text-3xl md:text-4xl font-normal text-gray-900">
           Goal-based flows
@@ -39,7 +39,7 @@ export default function FlowsPage() {
       </div>
 
       {/* Funnel tabs */}
-      <div className="flex gap-2 mb-10">
+      <div className="flex flex-wrap gap-2 mb-10">
         {funnels.map((f, i) => {
           const c = palette[i] ?? palette[0];
           const Icon = getFunnelIcon(f.icon);
