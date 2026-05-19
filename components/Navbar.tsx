@@ -20,7 +20,7 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 pointer-events-none">
       <div className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-white/10 backdrop-blur-sm">
         <Link href="/" className="px-2 py-1 mr-1 shrink-0">
-          <LogoMark size={32} />
+          <LogoMark />
         </Link>
         <nav className="flex items-center gap-0.5">
           {nav.map(({ href, label }) => {
