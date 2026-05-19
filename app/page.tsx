@@ -221,8 +221,8 @@ export default function HomePage() {
       <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#EDE5F5" }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-start">
 
-          {/* Left: law cards */}
-          <div className="space-y-4">
+          {/* Left: law cards — order-2 on mobile so text header appears first */}
+          <div className="space-y-4 order-2 md:order-1">
             {featuredLaws.map((law) => (
               <div key={law.name} className="rounded-2xl p-6 shadow-sm" style={{ position: "relative", overflow: "hidden", background: "#FDFAF8" }}>
                 <CardWaves />
@@ -242,8 +242,8 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Right: text */}
-          <div className="md:sticky md:top-32">
+          {/* Right: text — order-1 on mobile so it appears above the cards */}
+          <div className="md:sticky md:top-32 order-1 md:order-2">
             <p className="text-xs tracking-[0.22em] uppercase font-medium mb-5" style={{ color: "#9E9589" }}>
               Psychology Laws
             </p>
