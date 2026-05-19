@@ -1,12 +1,13 @@
 export function LogoMark({ className = "", color = "#111111" }: { className?: string; color?: string }) {
   return (
-    <span className={`inline-flex flex-col items-center leading-none ${className}`}>
+    <span className={`inline-flex items-baseline leading-none ${className}`} style={{ gap: "0.35rem" }}>
       <span
         style={{
-          fontFamily: "var(--font-logo)",
-          fontWeight: 900,
-          fontSize: "1.25rem",
-          letterSpacing: "-0.04em",
+          fontFamily: "var(--font-display)",
+          fontStyle: "normal",
+          fontWeight: 700,
+          fontSize: "0.9rem",
+          letterSpacing: "-0.01em",
           color,
           lineHeight: 1,
         }}
@@ -15,14 +16,13 @@ export function LogoMark({ className = "", color = "#111111" }: { className?: st
       </span>
       <span
         style={{
-          fontFamily: "var(--font-logo)",
-          fontWeight: 900,
-          fontSize: "0.5rem",
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
+          fontFamily: "var(--font-display)",
+          fontStyle: "italic",
+          fontWeight: 700,
+          fontSize: "1.1rem",
+          letterSpacing: "-0.02em",
           color,
           lineHeight: 1,
-          marginTop: "2px",
         }}
       >
         Playbook
