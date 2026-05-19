@@ -17,6 +17,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { Pattern } from "@/lib/data";
 import { PlatformTag, GoalTag } from "@/components/ui/tags";
+import { CardWaves } from "@/components/CardWaves";
 
 function getPatternIcon(name: string) {
   if (name === "Star")           return StarFreeIcons;
@@ -39,12 +40,16 @@ export function PatternCard({ pattern }: { pattern: Pattern }) {
 
   return (
     <div
-      className="rounded-xl bg-white transition-all"
+      className="rounded-xl transition-all"
       style={{
+        position: "relative",
+        overflow: "hidden",
+        background: "#FDFAF8",
         border: open ? "1px solid rgba(217,92,58,0.3)" : "1px solid #EDE8E2",
         boxShadow: open ? "0 1px 6px rgba(217,92,58,0.06)" : undefined,
       }}
     >
+      <CardWaves />
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full text-left px-5 py-4 flex items-start gap-4"

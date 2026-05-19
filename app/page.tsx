@@ -2,6 +2,8 @@ import Link from "next/link";
 import { patterns, laws } from "@/lib/data";
 import { LogoMark } from "@/components/LogoMark";
 import { HeroWaves } from "@/components/HeroWaves";
+import { CardWaves } from "@/components/CardWaves";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 const featuredPatterns = patterns.slice(0, 3);
 const featuredLaws = laws.slice(0, 3);
@@ -77,24 +79,25 @@ export default function HomePage() {
                 desc: "Share a website or GitHub repository and receive a psychology-mapped audit, friction points, missed conversions, and what to fix first.",
                 href: "/audit",
               },
-            ].map((item) => (
-              <Link
-                key={item.num}
-                href={item.href}
-                className="group grid grid-cols-[56px_1fr] sm:grid-cols-[96px_1fr] gap-6 sm:gap-16 items-start"
-              >
-                <span className="font-display text-5xl sm:text-8xl font-normal text-gray-900 leading-none">
-                  {item.num}
-                </span>
-                <div>
-                  <h3 className="font-display text-3xl md:text-4xl font-normal text-gray-900 mb-3 leading-tight group-hover:opacity-70 transition-opacity">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-900/60 text-base leading-relaxed max-w-lg">
-                    {item.desc}
-                  </p>
-                </div>
-              </Link>
+            ].map((item, i) => (
+              <ScrollReveal key={item.num} delay={i * 120}>
+                <Link
+                  href={item.href}
+                  className="group grid grid-cols-[56px_1fr] sm:grid-cols-[96px_1fr] gap-6 sm:gap-16 items-start"
+                >
+                  <span className="font-display text-5xl sm:text-8xl font-normal text-gray-900 leading-none">
+                    {item.num}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-3xl md:text-4xl font-normal text-gray-900 mb-3 leading-tight group-hover:opacity-70 transition-opacity">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-900/60 text-base leading-relaxed max-w-lg">
+                      {item.desc}
+                    </p>
+                  </div>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -128,7 +131,8 @@ export default function HomePage() {
           {/* Right: pattern cards */}
           <div className="space-y-4">
             {featuredPatterns.map((p) => (
-              <div key={p.id} className="bg-white rounded-2xl p-6 shadow-sm">
+              <div key={p.id} className="rounded-2xl p-6 shadow-sm" style={{ position: "relative", overflow: "hidden", background: "#FDFAF8" }}>
+                <CardWaves />
                 <div className="flex items-start justify-between gap-6">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
@@ -165,9 +169,30 @@ export default function HomePage() {
 
       {/* ── PSYCHOLOGY LAWS ────────────────────────────────────── */}
       <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#EDE5F5" }}>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-start">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-start">
 
-          {/* Left: text */}
+          {/* Left: law cards */}
+          <div className="space-y-4">
+            {featuredLaws.map((law) => (
+              <div key={law.name} className="rounded-2xl p-6 shadow-sm" style={{ position: "relative", overflow: "hidden", background: "#FDFAF8" }}>
+                <CardWaves />
+                <p className="text-[10px] tracking-[0.22em] uppercase font-medium mb-4" style={{ color: "#9E9589" }}>
+                  {law.category}
+                </p>
+                <h3 className="font-display text-xl font-normal text-gray-900 mb-2 leading-snug">
+                  {law.name}
+                </h3>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B6460" }}>
+                  {law.def}
+                </p>
+                <p className="text-xs leading-relaxed font-medium" style={{ color: "#7B3FA0" }}>
+                  {law.use}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Right: text */}
           <div className="md:sticky md:top-32">
             <p className="text-xs tracking-[0.22em] uppercase font-medium mb-5" style={{ color: "#9E9589" }}>
               Psychology Laws
@@ -188,26 +213,6 @@ export default function HomePage() {
             >
               View all {laws.length} laws →
             </Link>
-          </div>
-
-          {/* Right: law cards */}
-          <div className="space-y-4">
-            {featuredLaws.map((law) => (
-              <div key={law.name} className="bg-white rounded-2xl p-6 shadow-sm">
-                <p className="text-[10px] tracking-[0.22em] uppercase font-medium mb-4" style={{ color: "#9E9589" }}>
-                  {law.category}
-                </p>
-                <h3 className="font-display text-xl font-normal text-gray-900 mb-2 leading-snug">
-                  {law.name}
-                </h3>
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B6460" }}>
-                  {law.def}
-                </p>
-                <p className="text-xs leading-relaxed font-medium" style={{ color: "#7B3FA0" }}>
-                  {law.use}
-                </p>
-              </div>
-            ))}
           </div>
 
         </div>

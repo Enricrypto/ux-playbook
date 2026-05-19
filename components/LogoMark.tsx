@@ -4,10 +4,10 @@ export function LogoMark({ className = "", color = "#111111" }: { className?: st
       <span
         style={{
           fontFamily: "var(--font-display)",
-          fontStyle: "normal",
+          fontStyle: "italic",
           fontWeight: 700,
-          fontSize: "0.9rem",
-          letterSpacing: "-0.01em",
+          fontSize: "1.1rem",
+          letterSpacing: "-0.02em",
           color,
           lineHeight: 1,
         }}
