@@ -5,14 +5,27 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Search01FreeIcons } from "@hugeicons/core-free-icons";
 import { patterns, type Platform, type Goal } from "@/lib/data";
 import { PatternCard } from "@/components/PatternCard";
+import { PatternProgress } from "@/components/PatternProgress";
 
 const platforms = ["All", "SaaS", "Mobile", "E-com"] as const;
 const goals = ["All", "Conversion", "Retention", "Engagement", "Onboarding"] as const;
+
+const STORAGE_KEY = "ux-viewed-patterns";
+
+function loadViewed(): Set<string> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
 
 export default function PatternsPage() {
   const [search, setSearch] = useState("");
   const [platform, setPlatform] = useState<Platform | "All">("All");
   const [goal, setGoal] = useState<Goal | "All">("All");
+  const [viewedIds, setViewedIds] = useState<Set<string>>(() => loadViewed());
 
   const filtered = useMemo(
     () =>
@@ -29,6 +42,17 @@ export default function PatternsPage() {
     [search, platform, goal]
   );
 
+  const markViewed = (id: string) => {
+    if (viewedIds.has(id)) return;
+    const next = new Set(viewedIds).add(id);
+    setViewedIds(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
+    } catch {
+      // localStorage unavailable — progress just won't persist
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 pt-24 pb-16">
       <div className="mb-6">
@@ -38,6 +62,8 @@ export default function PatternsPage() {
           Click any card to expand.
         </p>
       </div>
+
+      <PatternProgress viewed={viewedIds.size} total={patterns.length} />
 
       <div className="flex flex-col gap-3 mb-6">
         <div className="relative">
@@ -69,7 +95,16 @@ export default function PatternsPage() {
             No patterns match your filters.
           </div>
         ) : (
-          filtered.map((p) => <PatternCard key={p.id} pattern={p} />)
+          filtered.map((p) => (
+            <div
+              key={p.id}
+              onClick={() => markViewed(p.id)}
+              className="transition-opacity"
+              style={{ opacity: viewedIds.has(p.id) ? 0.75 : 1 }}
+            >
+              <PatternCard pattern={p} />
+            </div>
+          ))
         )}
       </div>
     </div>

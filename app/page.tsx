@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { patterns, laws } from "@/lib/data";
 import { LogoMark } from "@/components/LogoMark";
@@ -8,7 +12,20 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 const featuredPatterns = patterns.slice(0, 3);
 const featuredLaws = laws.slice(0, 3);
 
+const AVATAR_COLORS = ["#D95C3A", "#B87AD4", "#7B3FA0", "#6B6460", "#C9A8DC"];
+
 export default function HomePage() {
+  const [heroUrl, setHeroUrl] = useState("");
+  const router = useRouter();
+
+  const handleHeroAudit = () => {
+    router.push(
+      heroUrl.trim()
+        ? `/audit?url=${encodeURIComponent(heroUrl.trim())}`
+        : "/audit"
+    );
+  };
+
   return (
     <div className="overflow-auto">
 
@@ -18,13 +35,30 @@ export default function HomePage() {
       </div>
       <section className="px-4 sm:px-8 md:px-12 py-16" style={{ backgroundColor: "#F5F0EB" }}>
         <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-center">
-          <h1
-            className="font-display font-normal text-gray-900 leading-[1.02]"
-            style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
-          >
-            Design with<br />
-            <em className="font-display italic">intention.</em>
-          </h1>
+          <div>
+            <h1
+              className="font-display font-normal text-gray-900 leading-[1.02] mb-5"
+              style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
+            >
+              Design with<br />
+              <em className="font-display italic">intention.</em>
+            </h1>
+            {/* Social proof */}
+            <div className="flex items-center gap-2.5">
+              <div className="flex -space-x-1.5">
+                {AVATAR_COLORS.map((c, i) => (
+                  <div
+                    key={i}
+                    className="w-6 h-6 rounded-full border-2"
+                    style={{ backgroundColor: c, borderColor: "#F5F0EB" }}
+                  />
+                ))}
+              </div>
+              <p className="text-sm" style={{ color: "#6B6460" }}>
+                Trusted by <strong className="text-gray-800">3,000+</strong> designers &amp; PMs
+              </p>
+            </div>
+          </div>
 
           <div className="flex flex-col gap-5">
             <div className="space-y-3">
@@ -35,14 +69,30 @@ export default function HomePage() {
                 Everything a sharp product team needs to ship experiences that actually work.
               </p>
             </div>
-            <Link
-              href="/patterns"
-              className="self-start inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-gray-900 font-medium text-sm hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: "#D95C3A" }}
-            >
-              <span className="w-2 h-2 rounded-full bg-gray-900/50 shrink-0" />
-              Explore Patterns
-            </Link>
+            {/* Hero audit input */}
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  placeholder="https://yoursite.com"
+                  value={heroUrl}
+                  onChange={(e) => setHeroUrl(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleHeroAudit()}
+                  className="flex-1 min-w-0 px-4 py-2.5 text-sm border rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-[#D95C3A]/20 focus:border-[#D95C3A]/40 transition-colors"
+                  style={{ borderColor: "#E0DAD2" }}
+                />
+                <button
+                  onClick={handleHeroAudit}
+                  className="px-5 py-2.5 rounded-full font-medium text-sm shrink-0 hover:opacity-90 transition-opacity text-white"
+                  style={{ backgroundColor: "#D95C3A" }}
+                >
+                  Audit →
+                </button>
+              </div>
+              <p className="text-xs" style={{ color: "#9E9589" }}>
+                Any URL. 30 seconds. No signup required.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -219,32 +269,61 @@ export default function HomePage() {
       </section>
 
       {/* ── AUDIT CTA ──────────────────────────────────────────── */}
-      <section className="px-4 sm:px-8 md:px-12 py-24" style={{ backgroundColor: "#C9A8DC" }}>
-        <div className="max-w-4xl mx-auto grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-center">
-          <h2
-            className="font-display font-normal text-gray-900 leading-[1.05]"
-            style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
-          >
-            Stop guessing.<br />
-            <em className="italic font-display" style={{ color: "#6B3A8A" }}>
-              Start auditing.
-            </em>
-          </h2>
+      <section className="px-4 sm:px-8 md:px-12 pt-16 pb-24" style={{ backgroundColor: "#C9A8DC" }}>
+        <div className="max-w-4xl mx-auto">
 
-          <div className="flex flex-col gap-5">
-            <p className="text-base leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>
-              Paste any website URL or GitHub repository. Get a psychology-mapped
-              report, friction points, missed conversions, and what to fix first.
+          {/* Testimonial */}
+          <div className="rounded-2xl p-6 md:p-8 mb-16" style={{ backgroundColor: "rgba(255,255,255,0.18)" }}>
+            <p className="font-display text-xl md:text-2xl font-normal text-gray-900 leading-relaxed mb-5">
+              &ldquo;The audit caught three conversion killers we&apos;d been blind to for months. Shipped the fixes in a sprint — bounce rate dropped 18%.&rdquo;
             </p>
-            <Link
-              href="/audit"
-              className="self-start inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-gray-900 font-medium text-sm hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: "#D95C3A" }}
-            >
-              <span className="w-2 h-2 rounded-full bg-gray-900/40 shrink-0" />
-              Run your first audit
-            </Link>
+            <div className="flex items-center gap-3">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold text-white shrink-0"
+                style={{ backgroundColor: "#7B3FA0" }}
+              >
+                S
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">Sarah K.</p>
+                <p className="text-xs" style={{ color: "rgba(0,0,0,0.45)" }}>Senior PM · B2B SaaS</p>
+              </div>
+            </div>
           </div>
+
+          {/* CTA grid */}
+          <div className="grid md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-center">
+            <h2
+              className="font-display font-normal text-gray-900 leading-[1.05]"
+              style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
+            >
+              Stop guessing.<br />
+              <em className="italic font-display" style={{ color: "#6B3A8A" }}>
+                Start auditing.
+              </em>
+            </h2>
+
+            <div className="flex flex-col gap-5">
+              <p className="text-base leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>
+                Paste any website URL or GitHub repository. Get a psychology-mapped
+                report, friction points, missed conversions, and what to fix first.
+              </p>
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/audit"
+                  className="self-start inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-gray-900 font-medium text-sm hover:opacity-90 transition-opacity"
+                  style={{ backgroundColor: "#D95C3A", color: "#fff" }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-white/50 shrink-0" />
+                  Run your first audit
+                </Link>
+                <p className="text-xs" style={{ color: "rgba(0,0,0,0.40)" }}>
+                  Free · 30 seconds · No signup
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Audit01FreeIcons,
@@ -45,8 +46,14 @@ const impactStyle = (level: string) => {
 };
 
 export default function AuditPage() {
+  const searchParams = useSearchParams();
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const param = searchParams.get("url");
+    if (param) setUrl(param);
+  }, [searchParams]);
   const [result, setResult] = useState<AuditResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
