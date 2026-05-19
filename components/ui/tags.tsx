@@ -1,54 +1,51 @@
-import { cn } from "@/lib/utils";
+import type { Platform, Goal } from "@/lib/data";
 
-type Platform = "SaaS" | "Mobile" | "E-com";
-type Goal = "Conversion" | "Retention" | "Engagement" | "Onboarding";
 type Priority = "must" | "should" | "nice";
 
-const platformColors: Record<Platform, string> = {
-  SaaS: "bg-blue-50 text-blue-700 border-blue-200",
-  Mobile: "bg-purple-50 text-purple-700 border-purple-200",
-  "E-com": "bg-emerald-50 text-emerald-700 border-emerald-200",
+const platformStyles: Record<Platform, { color: string; bg: string; border: string }> = {
+  SaaS:   { color: "#D95C3A", bg: "rgba(217,92,58,0.08)",   border: "rgba(217,92,58,0.2)"   },
+  Mobile: { color: "#1E0E3A", bg: "rgba(30,14,58,0.07)",    border: "rgba(30,14,58,0.15)"   },
+  "E-com":{ color: "#B87AD4", bg: "rgba(184,122,212,0.1)",  border: "rgba(184,122,212,0.22)"},
 };
 
-const goalColors: Record<Goal, string> = {
-  Conversion: "bg-orange-50 text-orange-700 border-orange-200",
-  Retention: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  Engagement: "bg-violet-50 text-violet-700 border-violet-200",
-  Onboarding: "bg-sky-50 text-sky-700 border-sky-200",
+const goalStyles: Record<Goal, { color: string; bg: string; border: string }> = {
+  Conversion: { color: "#D95C3A", bg: "rgba(217,92,58,0.08)",   border: "rgba(217,92,58,0.2)"   },
+  Retention:  { color: "#B87AD4", bg: "rgba(184,122,212,0.1)",  border: "rgba(184,122,212,0.22)"},
+  Engagement: { color: "#1E0E3A", bg: "rgba(30,14,58,0.07)",    border: "rgba(30,14,58,0.15)"   },
+  Onboarding: { color: "#9E9589", bg: "rgba(158,149,137,0.1)",  border: "rgba(158,149,137,0.2)" },
 };
 
-const priorityStyles: Record<Priority, string> = {
-  must: "bg-red-50 text-red-700 border-red-200",
-  should: "bg-amber-50 text-amber-700 border-amber-200",
-  nice: "bg-gray-50 text-gray-600 border-gray-200",
+const priorityStyles: Record<Priority, { color: string; bg: string; border: string; label: string }> = {
+  must:   { color: "#D95C3A", bg: "rgba(217,92,58,0.08)",  border: "rgba(217,92,58,0.2)",  label: "Must"        },
+  should: { color: "#9E9589", bg: "rgba(158,149,137,0.1)", border: "rgba(158,149,137,0.2)",label: "Should"      },
+  nice:   { color: "#9E9589", bg: "rgba(158,149,137,0.06)",border: "rgba(158,149,137,0.15)",label: "Nice to have"},
 };
 
-const priorityLabel: Record<Priority, string> = {
-  must: "Must",
-  should: "Should",
-  nice: "Nice to have",
-};
+const tagBase = "text-xs px-2 py-0.5 rounded font-medium";
 
 export function PlatformTag({ platform }: { platform: Platform }) {
+  const s = platformStyles[platform];
   return (
-    <span className={cn("text-xs px-2 py-0.5 rounded border font-medium", platformColors[platform])}>
+    <span className={tagBase} style={{ color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` }}>
       {platform}
     </span>
   );
 }
 
 export function GoalTag({ goal }: { goal: Goal }) {
+  const s = goalStyles[goal];
   return (
-    <span className={cn("text-xs px-2 py-0.5 rounded border font-medium", goalColors[goal])}>
+    <span className={tagBase} style={{ color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` }}>
       {goal}
     </span>
   );
 }
 
 export function PriorityBadge({ priority }: { priority: Priority }) {
+  const s = priorityStyles[priority];
   return (
-    <span className={cn("text-xs px-2 py-0.5 rounded border font-medium", priorityStyles[priority])}>
-      {priorityLabel[priority]}
+    <span className={tagBase} style={{ color: s.color, backgroundColor: s.bg, border: `1px solid ${s.border}` }}>
+      {s.label}
     </span>
   );
 }

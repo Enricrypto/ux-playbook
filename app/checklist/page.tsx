@@ -1,17 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle2, Circle, RotateCcw } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { CheckmarkCircle01FreeIcons, Rotate01FreeIcons } from "@hugeicons/core-free-icons";
 import { checklistItems } from "@/lib/data";
 import { PriorityBadge } from "@/components/ui/tags";
 
 const categories = ["Conversion", "Onboarding", "Retention", "Ethics"] as const;
 
-const categoryColors: Record<string, string> = {
-  Conversion: "text-orange-700",
-  Onboarding: "text-sky-700",
-  Retention: "text-emerald-700",
-  Ethics: "text-violet-700",
+const categoryConfig: Record<string, { color: string }> = {
+  Conversion: { color: "#D95C3A" },
+  Onboarding: { color: "#1E0E3A" },
+  Retention:  { color: "#B87AD4" },
+  Ethics:     { color: "#9E9589" },
 };
 
 const STORAGE_KEY = "ux-playbook-checklist";
@@ -31,7 +32,8 @@ export default function ChecklistPage() {
   const toggle = (id: string) => {
     setDone((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...next])); } catch {}
       return next;
     });
@@ -49,59 +51,94 @@ export default function ChecklistPage() {
   if (!loaded) return null;
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-8">
-      <div className="flex items-start justify-between mb-6">
+    <div className="max-w-3xl mx-auto px-8 pt-24 pb-16">
+      <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Pre-launch audit checklist</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="font-display text-3xl md:text-4xl font-normal text-gray-900">
+            Pre-launch checklist
+          </h1>
+          <p className="text-sm mt-1" style={{ color: "#9E9589" }}>
             Run this before shipping any significant flow. Progress saves in your browser.
           </p>
         </div>
-        <button onClick={reset} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors mt-1">
-          <RotateCcw className="w-3.5 h-3.5" /> Reset
+        <button
+          onClick={reset}
+          className="flex items-center gap-1.5 text-xs mt-1 transition-opacity hover:opacity-60"
+          style={{ color: "#9E9589" }}
+        >
+          <HugeiconsIcon icon={Rotate01FreeIcons} size={13} color="#9E9589" strokeWidth={1.5} />
+          Reset
         </button>
       </div>
 
-      {/* Progress */}
-      <div className="bg-white rounded-xl border border-gray-100 p-5 mb-6">
-        <div className="flex items-center justify-between mb-2">
+      <div
+        className="rounded-xl border p-5 mb-8"
+        style={{ borderColor: "#E8E3DC", backgroundColor: "white" }}
+      >
+        <div className="flex items-center justify-between mb-2.5">
           <span className="text-sm font-medium text-gray-700">Overall completion</span>
-          <span className="text-sm font-semibold text-gray-900">{completed} / {total}</span>
+          <span className="text-sm font-medium" style={{ color: "#D95C3A" }}>
+            {completed} / {total}
+          </span>
         </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "#EDE8E2" }}>
           <div
-            className="h-full bg-blue-500 rounded-full transition-all duration-300"
-            style={{ width: `${pct}%` }}
+            className="h-full rounded-full transition-all duration-300"
+            style={{ width: `${pct}%`, backgroundColor: "#D95C3A" }}
           />
         </div>
-        <p className="text-xs text-gray-400 mt-1.5">{pct}% complete</p>
+        <p className="text-xs mt-2" style={{ color: "#9E9589" }}>{pct}% complete</p>
       </div>
 
-      {/* Items by category */}
       <div className="space-y-6">
         {categories.map((cat) => {
           const items = checklistItems.filter((i) => i.category === cat);
           const catDone = items.filter((i) => done.has(i.id)).length;
+          const cfg = categoryConfig[cat];
           return (
             <div key={cat}>
               <div className="flex items-center justify-between mb-2">
-                <h2 className={`text-sm font-semibold ${categoryColors[cat]}`}>{cat}</h2>
-                <span className="text-xs text-gray-400">{catDone} / {items.length}</span>
+                <h2
+                  className="text-xs font-semibold uppercase tracking-[0.15em]"
+                  style={{ color: cfg.color }}
+                >
+                  {cat}
+                </h2>
+                <span className="text-xs" style={{ color: "#9E9589" }}>
+                  {catDone} / {items.length}
+                </span>
               </div>
-              <div className="bg-white rounded-xl border border-gray-100 divide-y divide-gray-50">
-                {items.map((item) => {
+              <div
+                className="rounded-xl border overflow-hidden"
+                style={{ borderColor: "#E8E3DC", backgroundColor: "white" }}
+              >
+                {items.map((item, idx) => {
                   const checked = done.has(item.id);
                   return (
                     <button
                       key={item.id}
                       onClick={() => toggle(item.id)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-[#FAF8F5]"
+                      style={{ borderTop: idx > 0 ? "1px solid #F0ECE6" : undefined }}
                     >
-                      {checked
-                        ? <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                        : <Circle className="w-5 h-5 text-gray-300 flex-shrink-0" />
-                      }
-                      <span className={`flex-1 text-sm leading-snug ${checked ? "line-through text-gray-400" : "text-gray-700"}`}>
+                      {checked ? (
+                        <HugeiconsIcon
+                          icon={CheckmarkCircle01FreeIcons}
+                          size={18}
+                          color="#D95C3A"
+                          strokeWidth={1.5}
+                          className="shrink-0"
+                        />
+                      ) : (
+                        <div
+                          className="w-[18px] h-[18px] rounded-full border-2 shrink-0"
+                          style={{ borderColor: "#D4CEC8" }}
+                        />
+                      )}
+                      <span
+                        className="flex-1 text-sm leading-snug"
+                        style={{ color: checked ? "#9E9589" : "#4B4540", textDecoration: checked ? "line-through" : undefined }}
+                      >
                         {item.text}
                       </span>
                       <PriorityBadge priority={item.priority} />
@@ -113,10 +150,6 @@ export default function ChecklistPage() {
           );
         })}
       </div>
-
-      <p className="text-xs text-gray-400 mt-8">
-        Add items in <code className="font-mono bg-gray-100 px-1 rounded">lib/data.ts</code> under <code className="font-mono bg-gray-100 px-1 rounded">checklistItems</code>.
-      </p>
     </div>
   );
 }
